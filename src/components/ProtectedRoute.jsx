@@ -1,4 +1,4 @@
-"use client"
+
 import { Navigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 
@@ -15,7 +15,7 @@ function ProtectedRoute({ children }) {
     return <Navigate to="/" />
   }
 
-  return children
+  return <>{children}</>
 }
 
 export default ProtectedRoute

@@ -9,9 +9,9 @@ import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
+    <Router>
+      <AuthProvider>
+        <CartProvider>
           <div className="min-h-screen bg-gray-50">
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -27,9 +27,9 @@ function App() {
               />
             </Routes>
           </div>
-        </Router>
-      </CartProvider>
-    </AuthProvider>
+        </CartProvider>
+      </AuthProvider>
+    </Router>
   )
 }
 

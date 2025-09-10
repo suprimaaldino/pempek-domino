@@ -3,33 +3,34 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Rules untuk koleksi menu
     match /menu/{menuId} {
-      // Semua orang bisa baca menu
       allow read: if true;
-      // Hanya admin yang bisa write/update/delete menu
       allow write: if isAdmin();
     }
     
     // Rules untuk koleksi orders
     match /orders/{orderId} {
-      // User yang sudah login bisa buat order baru
       allow create: if request.auth != null;
-      // Hanya admin yang bisa baca semua orders
       allow read: if isAdmin();
-      // Hanya admin yang bisa update status order
       allow update: if isAdmin();
     }
     
-    // Rules untuk koleksi admins
+    // Rules untuk koleksi admins - pake email hardcoded untuk bootstrap
     match /admins/{userId} {
-      // Hanya admin yang bisa baca/write data admin
-      allow read, write: if isAdmin();
+      allow read: if isAdmin() || isBootstrapAdmin();
+      allow write: if isBootstrapAdmin(); // Hanya bootstrap admin yang bisa manage admins
     }
     
-    // Function helper untuk cek admin
+    // Function helpers
     function isAdmin() {
       return request.auth != null && 
              exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
              get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Bootstrap admin untuk setup awal
+    function isBootstrapAdmin() {
+      return request.auth != null && 
+             request.auth.token.email == 'allmight@pempekdomino.com';
     }
   }
 }

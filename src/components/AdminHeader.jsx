@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { LogOut, User, Settings, ChevronDown } from "lucide-react"
@@ -40,6 +38,7 @@ function AdminHeader({ title, subtitle }) {
               </div>
               <div className="text-left hidden sm:block">
                 <p className="text-sm font-medium">{currentUser?.email}</p>
+                <p className="text-sm font-medium">{currentUser ? currentUser.email : "No user"}</p>
                 <p className="text-xs text-muted-foreground">Administrator</p>
               </div>
               <ChevronDown className="w-4 h-4 text-muted-foreground" />

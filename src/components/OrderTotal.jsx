@@ -1,10 +1,10 @@
-"use client"
+
 import { useCart } from "../contexts/CartContext"
 
 function OrderTotal({ deliveryMethod }) {
   const { getTotalPrice } = useCart()
 
-  const subtotal = getTotalPrice()
+  const subtotal = typeof getTotalPrice() === "number" ? getTotalPrice() : 0
   const deliveryFee = deliveryMethod === "delivery" ? 5000 : 0
   const total = subtotal + deliveryFee
 

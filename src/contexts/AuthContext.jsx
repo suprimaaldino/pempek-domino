@@ -1,5 +1,3 @@
-"use client"
-
 import { createContext, useContext, useState, useEffect } from "react"
 import {
   signInWithEmailAndPassword,
@@ -11,7 +9,14 @@ import {
 import { doc, getDoc } from "firebase/firestore"
 import { auth, db } from "../config/firebase"
 
-const AuthContext = createContext()
+const AuthContext = createContext({
+  currentUser: null,
+  isAdmin: false,
+  login: () => Promise.resolve(),
+  loginWithGoogle: () => Promise.resolve(),
+  logout: () => Promise.resolve(),
+  checkAdminStatus: () => Promise.resolve(false),
+})
 
 export function useAuth() {
   return useContext(AuthContext)
@@ -22,29 +27,15 @@ export function AuthProvider({ children }) {
   const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  // Login dengan email dan password
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password)
-  }
+  const login = (email, password) => signInWithEmailAndPassword(auth, email, password)
+  const loginWithGoogle = () => signInWithPopup(auth, new GoogleAuthProvider())
+  const logout = () => signOut(auth)
 
-  // Login dengan Google
-  const loginWithGoogle = () => {
-    const provider = new GoogleAuthProvider()
-    return signInWithPopup(auth, provider)
-  }
-
-  // Logout
-  const logout = () => {
-    return signOut(auth)
-  }
-
-  // Cek apakah user adalah admin
   const checkAdminStatus = async (user) => {
     if (!user) {
       setIsAdmin(false)
       return false
     }
-
     try {
       const adminDoc = await getDoc(doc(db, "admins", user.uid))
       const adminStatus = adminDoc.exists() && adminDoc.data().role === "admin"
@@ -58,13 +49,13 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const handleAuthChange = async (user) => {
       setCurrentUser(user)
       await checkAdminStatus(user)
       setLoading(false)
-    })
-
-    return unsubscribe
+    }
+    const unsubscribe = onAuthStateChanged(auth, handleAuthChange)
+    return () => unsubscribe()
   }, [])
 
   const value = {

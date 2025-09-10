@@ -1,4 +1,4 @@
-"use client"
+
 import { Minus, Plus, Trash2 } from "lucide-react"
 import { useCart } from "../contexts/CartContext"
 
@@ -46,8 +46,9 @@ function OrderSummary() {
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                onClick={() => item.quantity > 1 && updateQuantity(item.id, item.quantity - 1)}
                 className="w-8 h-8 rounded-full bg-secondary hover:bg-secondary/80 flex items-center justify-center transition-colors"
+                disabled={item.quantity <= 1}
               >
                 <Minus className="w-4 h-4" />
               </button>

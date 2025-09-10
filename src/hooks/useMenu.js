@@ -1,4 +1,3 @@
-"use client"
 
 import { useState, useEffect } from "react"
 import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore"
@@ -10,16 +9,22 @@ export function useMenu() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const q = query(collection(db, "menu"), where("active", "==", true), orderBy("createdAt", "desc"))
+    const q = query(
+      collection(db, "menu"),
+      where("active", "==", true),
+      orderBy("createdAt", "desc")
+    )
 
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
         const menuData = []
         querySnapshot.forEach((doc) => {
+          const data = doc.data()
           menuData.push({
             id: doc.id,
-            ...doc.data(),
+            ...data,
+            createdAt: data.createdAt ? data.createdAt : null, // Ensure createdAt exists
           })
         })
         setMenus(menuData)
@@ -29,7 +34,7 @@ export function useMenu() {
         console.error("Error fetching menus:", error)
         setError(error)
         setLoading(false)
-      },
+      }
     )
 
     return () => unsubscribe()

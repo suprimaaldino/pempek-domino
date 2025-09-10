@@ -1,4 +1,4 @@
-"use client"
+
 import { Search, X } from "lucide-react"
 
 function SearchBar({ searchQuery, onSearchChange }) {
@@ -19,7 +19,12 @@ function SearchBar({ searchQuery, onSearchChange }) {
         className="input-field pl-10 pr-10"
       />
       {searchQuery && (
-        <button onClick={handleClear} className="absolute inset-y-0 right-0 pr-3 flex items-center">
+        <button
+          type="button"
+          aria-label="Clear search"
+          onClick={handleClear}
+          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+        >
           <X className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
         </button>
       )}

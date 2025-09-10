@@ -16,7 +16,7 @@ function HomePage() {
 
   // Filter menu berdasarkan kategori dan pencarian
   const filteredMenus = useMemo(() => {
-    let filtered = menus
+    let filtered = menus || []
 
     // Filter berdasarkan kategori
     if (selectedCategory !== "all") {

@@ -1,5 +1,3 @@
-"use client"
-
 const categories = [
   { id: "all", name: "Semua", icon: "🍽️" },
   { id: "pempek-isi", name: "Pempek Isi", icon: "🥟" },
@@ -25,6 +23,13 @@ function CategoryFilter({ selectedCategory, onCategoryChange }) {
       ))}
     </div>
   )
+}
+
+import PropTypes from "prop-types"
+
+CategoryFilter.propTypes = {
+  selectedCategory: PropTypes.string.isRequired,
+  onCategoryChange: PropTypes.func.isRequired,
 }
 
 export default CategoryFilter

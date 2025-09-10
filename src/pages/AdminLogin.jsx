@@ -1,127 +1,118 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { Eye, EyeOff, Mail, Lock, Chrome, ArrowLeft } from "lucide-react"
-import { useAuth } from "../contexts/AuthContext"
-import LoadingSpinner from "../components/LoadingSpinner"
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Mail, Lock, Chrome, ArrowLeft } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function AdminLogin() {
-  const navigate = useNavigate()
-  const { login, loginWithGoogle, currentUser, isAdmin } = useAuth()
+  const navigate = useNavigate();
+  const { login, loginWithGoogle, currentUser, isAdmin } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
+  });
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Redirect jika sudah login sebagai admin
   useEffect(() => {
     if (currentUser && isAdmin) {
-      navigate("/admin")
+      navigate("/admin");
     }
-  }, [currentUser, isAdmin, navigate])
+  }, [currentUser, isAdmin, navigate]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-    }))
-    // Clear error saat user mulai mengetik
-    if (error) setError("")
-  }
+    }));
+    if (error) setError("");
+  };
 
   const validateForm = () => {
     if (!formData.email.trim()) {
-      setError("Email wajib diisi")
-      return false
+      setError("Email wajib diisi");
+      return false;
     }
 
     if (!formData.email.includes("@")) {
-      setError("Format email tidak valid")
-      return false
+      setError("Format email tidak valid");
+      return false;
     }
 
     if (!formData.password.trim()) {
-      setError("Password wajib diisi")
-      return false
+      setError("Password wajib diisi");
+      return false;
     }
 
     if (formData.password.length < 6) {
-      setError("Password minimal 6 karakter")
-      return false
+      setError("Password minimal 6 karakter");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const handleEmailLogin = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!validateForm()) return
+    if (!validateForm()) return;
 
-    setLoading(true)
-    setError("")
+    setLoading(true);
+    setError("");
 
     try {
-      await login(formData.email, formData.password)
-      // AuthContext akan handle redirect otomatis
+      await login(formData.email, formData.password);
     } catch (err) {
-      console.error("Login error:", err)
-
-      // Handle specific Firebase auth errors
+      console.error("Login error:", err);
       switch (err.code) {
         case "auth/user-not-found":
-          setError("Email tidak terdaftar")
-          break
+          setError("Email tidak terdaftar");
+          break;
         case "auth/wrong-password":
-          setError("Password salah")
-          break
+          setError("Password salah");
+          break;
         case "auth/invalid-email":
-          setError("Format email tidak valid")
-          break
+          setError("Format email tidak valid");
+          break;
         case "auth/user-disabled":
-          setError("Akun telah dinonaktifkan")
-          break
+          setError("Akun telah dinonaktifkan");
+          break;
         case "auth/too-many-requests":
-          setError("Terlalu banyak percobaan login. Coba lagi nanti")
-          break
+          setError("Terlalu banyak percobaan login. Coba lagi nanti");
+          break;
         default:
-          setError("Terjadi kesalahan saat login. Silakan coba lagi")
+          setError("Terjadi kesalahan saat login. Silakan coba lagi");
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleGoogleLogin = async () => {
-    setLoading(true)
-    setError("")
+    setLoading(true);
+    setError("");
 
     try {
-      await loginWithGoogle()
-      // AuthContext akan handle redirect otomatis
+      await loginWithGoogle();
     } catch (err) {
-      console.error("Google login error:", err)
-
+      console.error("Google login error:", err);
       switch (err.code) {
         case "auth/popup-closed-by-user":
-          setError("Login dibatalkan")
-          break
+          setError("Login dibatalkan");
+          break;
         case "auth/popup-blocked":
-          setError("Popup diblokir browser. Izinkan popup dan coba lagi")
-          break
+          setError("Popup diblokir browser. Izinkan popup dan coba lagi");
+          break;
         default:
-          setError("Terjadi kesalahan saat login dengan Google")
+          setError("Terjadi kesalahan saat login dengan Google");
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center p-4">
@@ -253,7 +244,7 @@ function AdminLogin() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default AdminLogin
+export default AdminLogin;

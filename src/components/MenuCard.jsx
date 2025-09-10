@@ -1,4 +1,3 @@
-"use client"
 import { ShoppingCart, Star } from "lucide-react"
 import { useCart } from "../contexts/CartContext"
 
@@ -68,6 +67,18 @@ function MenuCard({ menu }) {
       </div>
     </div>
   )
+}
+
+import PropTypes from "prop-types"
+
+MenuCard.propTypes = {
+  menu: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    price: PropTypes.number.isRequired,
+    images: PropTypes.array,
+    stock: PropTypes.number.isRequired,
+  }).isRequired,
 }
 
 export default MenuCard

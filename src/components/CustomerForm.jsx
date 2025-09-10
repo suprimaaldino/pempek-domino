@@ -1,7 +1,6 @@
-"use client"
 import { MapPin, Phone, User, MessageSquare, Truck, Store } from "lucide-react"
 
-function CustomerForm({ onFormChange, formData, errors }) {
+function CustomerForm({ onFormChange, formData = {}, errors = {} }) {
   const handleInputChange = (field, value) => {
     onFormChange({
       ...formData,

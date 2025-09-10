@@ -27,10 +27,6 @@ Aplikasi web modern untuk usaha pempek dengan fitur pemesanan online dan dashboa
 ## 📦 Instalasi
 
 ### 1. Clone Repository
-\`\`\`bash
-git clone <repository-url>
-cd pempek-domino
-\`\`\`
 
 ### 2. Install Dependencies
 \`\`\`bash

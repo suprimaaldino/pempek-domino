@@ -1,4 +1,3 @@
-"use client"
 
 import { useState } from "react"
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"
@@ -18,6 +17,12 @@ export function useOrder() {
   const createOrder = async (orderData) => {
     setLoading(true)
     setError(null)
+
+    if (!orderData?.items?.length || !orderData?.customer?.name || !orderData?.customer?.phone) {
+      setError('Missing required order information')
+      setLoading(false)
+      return { success: false, error: 'Missing required order information' }
+    }
 
     try {
       const orderNumber = generateOrderNumber()
