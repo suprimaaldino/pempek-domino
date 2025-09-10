@@ -1,0 +1,19 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Rules untuk folder menu-images
+    match /menu-images/{allPaths=**} {
+      // Semua orang bisa baca gambar menu
+      allow read: if true;
+      // Hanya admin yang bisa upload/update/delete gambar menu
+      allow write: if isAdmin();
+    }
+    
+    // Function helper untuk cek admin
+    function isAdmin() {
+      return request.auth != null && 
+             firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid)) &&
+             firestore.get(/databases/(default)/documents/admins/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}

@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Local env files
+.env
+.env.*.local
+
+# Firebase cache & configs
+.firebase/
+.firebase-tools.json
+
+# Editor & system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Optional: lock files (kalau tim pakai package manager beda-beda)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
