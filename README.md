@@ -228,6 +228,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📞 Contact
 
-Pempek Domino - [@pempekdomino](https://instagram.com/pempekdomino)
+Pempek Domino - [@aldinoaja](https://instagram.com/aldinoaja)
 
-Project Link: [https://github.com/yourusername/pempek-domino](https://github.com/yourusername/pempek-domino)
+Project Link: [https://github.com/suprimaaldino/pempek-domino](https://github.com/suprimaaldino/pempek-domino)
+
+Whatsapp: +628170103907
