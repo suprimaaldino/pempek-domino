@@ -232,4 +232,4 @@ Pempek Domino - [@aldinoaja](https://instagram.com/aldinoaja)
 
 Project Link: [https://github.com/suprimaaldino/pempek-domino](https://github.com/suprimaaldino/pempek-domino)
 
-Whatsapp: +628170103907
+Whatsapp: [https://wa.me/628170103907](https://wa.me/628170103907)
