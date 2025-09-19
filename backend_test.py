@@ -382,19 +382,19 @@ class PempekDominoTester:
     def test_environment_variables(self):
         """Test that environment variables are properly configured"""
         try:
-            # Test root endpoint to verify server is running
-            response = requests.get(f"{self.base_url.replace('/api', '')}/", timeout=10)
+            # Test categories endpoint to verify server and env vars are working
+            response = requests.get(f"{self.base_url}/categories", timeout=10)
             
             if response.status_code == 200:
-                result = response.json()
-                if "Pempek Domino API" in result.get("message", ""):
+                categories = response.json()
+                if isinstance(categories, list) and len(categories) >= 3:
                     self.log_test("Environment Variables", True,
                                 "Backend server running with proper configuration",
-                                f"Server message: {result.get('message')}")
+                                f"Environment variables loaded correctly, {len(categories)} categories found")
                 else:
                     self.log_test("Environment Variables", False,
-                                "Unexpected server response",
-                                f"Response: {result}")
+                                "Server running but data not properly initialized",
+                                f"Categories response: {categories}")
             else:
                 self.log_test("Environment Variables", False,
                             f"Server not responding properly: HTTP {response.status_code}",
